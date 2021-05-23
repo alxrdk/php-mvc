@@ -30,7 +30,7 @@ class Tasks extends \App\Controller
         $page = $params['p'] ?? 1;
         if ($page <= 0)
             $page = 1;
-        $maxPage = ceil($totalItems / Config::ITEMS_PER_PAGE);
+        $maxPage = ceil($totalItems ? $totalItems : 1 / Config::ITEMS_PER_PAGE);
         return ($page > $maxPage) ? $maxPage : $page;
     }
 
@@ -88,7 +88,7 @@ class Tasks extends \App\Controller
         return $errors;
     }
 
-    public function add(array $params, ?int $id = null)
+    public function add(array $params)
     {
         $errors = $this->validateTask();
         if (sizeof($errors) > 0) {
