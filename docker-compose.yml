@@ -1,0 +1,53 @@
+version: "3.1"
+services:
+    www:
+        build: .
+        ports:
+            - "${WWW_PORT}:80"
+        volumes:
+            - ./:/var/www/
+            - ${DOCUMENT_ROOT-./public}:/var/www/public
+            - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
+            - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
+            - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+        environment:
+            APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/public}
+        links:
+            - db
+        networks:
+            - default
+        restart: 'always'
+    db:
+        image: mysql
+        ports:
+            - "${MYSQL_PORT}:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        volumes:
+            - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
+            - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+        networks:
+            - default
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - ${PMA_PORT}:80
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_USER: ${MYSQL_USER}
+            PMA_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        volumes:
+            - /sessions
+            - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
+volumes:
+    persistent:
