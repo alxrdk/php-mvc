@@ -8,9 +8,9 @@ class Controller
 
     protected function view(string $tplName, array $params)
     {
-        View::render('header');
+        View::render('Header');
         View::render($tplName, $params);
-        View::render('footer');
+        View::render('Footer');
     }
 
 }
