@@ -34,7 +34,7 @@
                         <a href="/tasks?order=complited&asc=<?php echo ($order=='complited')?intval(!$asc):1 ?>">Complited</a>
                         <?php if ($order=='complited') { ?><i class="bi bi-sort-<?php echo $asc?'up':'down' ?>"></i><?php } ?>
                     </th>
-                    <th scope="col">Updated by admin</th>
+                    <th scope="col">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@
                         <?php echo $task->complited?'Yes':'No' ?>
                         <?php } ?>
                     </td>
-                    <td><?php echo $task->updated?'Yes':'No' ?></td>
+                    <td><?php echo $task->updated?'<strong>Updated by admin</strong>':'' ?></td>
                 </tr>
 
             <?php
