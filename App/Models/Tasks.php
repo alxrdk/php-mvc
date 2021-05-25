@@ -31,7 +31,7 @@ class Tasks extends \App\Model
 
     public function edit($id, $username, $email, $description, $complited)
     {
-        return $this->db()->query('UPDATE `tasks` SET `username` = :username, `email` = :email, `description` = :description, `complited` = :complited WHERE `id` = :id')
+        return $this->db()->query('UPDATE `tasks` SET `username` = :username, `email` = :email, `description` = :description, `complited` = :complited, `updated` = 1 WHERE `id` = :id')
             ->bind(':id', $id)
             ->bind(':username', $username)
             ->bind(':email', $email)
@@ -42,7 +42,7 @@ class Tasks extends \App\Model
 
     public function complite($id, $complited)
     {
-        return $this->db()->query('UPDATE `tasks` SET `complited` = :complited WHERE `id` = :id')
+        return $this->db()->query('UPDATE `tasks` SET `complited` = :complited, `updated` = 1 WHERE `id` = :id')
             ->bind(':id', $id)
             ->bind(':complited', $complited)
             ->execute();

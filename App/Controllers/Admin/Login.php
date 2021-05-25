@@ -39,7 +39,7 @@ class Login extends \App\Controller
             $errors = $this->validateLogin();
             if (sizeof($errors) == 0) {
 
-                if ($username == Config::ADMIN_USER && $password == Config::ADMIN_PASSWORD) {
+                if (strtolower($username) == Config::ADMIN_USER && $password == Config::ADMIN_PASSWORD) {
 
                     $_SESSION['authorized'] = true;
                     header('Location: /');

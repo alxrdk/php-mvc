@@ -85,6 +85,8 @@ class Tasks extends \App\Controllers\Tasks
     {
         if ($this->checkAuth()) {
             $this->tasks()->delete($params['id']);
+            $msg = new Flash();
+            $msg->success('Task deleted successfully!');
             header('Location: /tasks' . $this->getRefererParams($params));
         }
     }

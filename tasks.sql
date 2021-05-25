@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: db:3306
--- Время создания: Май 23 2021 г., 18:53
+-- Время создания: Май 25 2021 г., 13:02
 -- Версия сервера: 8.0.25
 -- Версия PHP: 7.4.16
 
@@ -33,6 +33,7 @@ CREATE TABLE `tasks` (
   `email` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `complited` tinyint(1) NOT NULL DEFAULT '0',
+  `updated` tinyint(1) NOT NULL DEFAULT '0',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
