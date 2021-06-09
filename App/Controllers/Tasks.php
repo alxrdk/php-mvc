@@ -11,7 +11,7 @@ class Tasks extends \App\Controller
     use \App\Traits\Auth;
     use \App\Traits\TasksModel;
 
-    protected function getOrder(array $params)
+    protected function getOrder(array $params) : string
     {
         $order = 'created';
         if (isset($params['order']) && in_array($params['order'], ['username', 'email', 'complited', 'created'])) {
@@ -20,12 +20,12 @@ class Tasks extends \App\Controller
         return $order;
     }
 
-    protected function getOrderAsc(array $params)
+    protected function getOrderAsc(array $params) : bool
     {
         return boolval($params['asc'] ?? 1);
     }
 
-    protected function getCurrentPage(array $params, int $totalItems)
+    protected function getCurrentPage(array $params, int $totalItems) : int
     {
         $page = $params['p'] ?? 1;
         if ($page <= 0)
@@ -34,17 +34,18 @@ class Tasks extends \App\Controller
         return ($page > $maxPage) ? $maxPage : $page;
     }
 
-    protected function getRefererParams(array $params) {
+    protected function getRefererParams(array $params) : string
+    {
         return "?p=" . ($params['p'] ?? 1) . "&order=" . $this->getOrder($params) . "&asc=" . $this->getOrderAsc($params) ;
     }
 
-    protected function getPaginator(array $params, int $totalItems, int $currentPage, string $urlPattern)
+    protected function getPaginator(array $params, int $totalItems, int $currentPage, string $urlPattern) : object
     {
         $itemsPerPage = Config::ITEMS_PER_PAGE;
         return new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
     }
 
-    public function show(array $params, array $advancedParams = [])
+    public function show(array $params, array $advancedParams = []) : void
     {
         $totalItems = $this->tasks()->count();
         $currentPage = $this->getCurrentPage($params, $totalItems);
@@ -68,7 +69,7 @@ class Tasks extends \App\Controller
         $this->view('Tasks', $viewParams);
     }
 
-    protected function validateTask()
+    protected function validateTask() : array
     {
         $errors = [];
         if (empty($_POST['username'])) {
@@ -88,7 +89,7 @@ class Tasks extends \App\Controller
         return $errors;
     }
 
-    public function add(array $params)
+    public function add(array $params) : void
     {
         $errors = $this->validateTask();
         if (sizeof($errors) > 0) {

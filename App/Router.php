@@ -10,12 +10,12 @@ class Router
 
     protected $routes = [];
 
-    public function get()
+    public function get() : array
     {
         return $this->routes ;
     }
 
-    public function add(string $method, string $path, string $class, string $action)
+    public function add(string $method, string $path, string $class, string $action) : void
     {
         $path = preg_replace('/\//', '\\/', $path);
         $path = '/^' . $path . '$/i';
@@ -23,7 +23,7 @@ class Router
         $this->routes[$method][$path] = [$class, $action];
     }
 
-    public function dispatch(string $query)
+    public function dispatch(string $query) : void
     {
 
         $parts = explode('&', $query, 2);

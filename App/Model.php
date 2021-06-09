@@ -7,7 +7,7 @@ use \App\Config;
 class Model
 {
 
-    protected static function db()
+    protected static function db() : \App\Database
     {
         static $dbh = null;
 

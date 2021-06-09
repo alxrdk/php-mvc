@@ -6,7 +6,12 @@ use \App\View;
 class Controller
 {
 
-    protected function view(string $tplName, array $params)
+    public function __construct()
+    {
+        session_start();
+    }
+
+    protected function view(string $tplName, array $params) : void
     {
         View::render('Header');
         View::render($tplName, $params);

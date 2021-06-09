@@ -8,7 +8,7 @@ class Login extends \App\Controller
 {
     use \App\Traits\Auth;
 
-    protected function validateLogin()
+    protected function validateLogin() : array
     {
         $errors = [];
         if (empty($_POST['username'])) {
@@ -22,7 +22,7 @@ class Login extends \App\Controller
         return $errors;
     }
 
-    public function login()
+    public function login() : void
     {
 
         if ($this->isAuthorized()) {
@@ -54,7 +54,7 @@ class Login extends \App\Controller
         $this->view('Admin\Login', ['username' => $username, 'password' => $password, 'errors' => $errors]);
     }
 
-    public function logout()
+    public function logout() : void
     {
         unset($_SESSION['authorized']);
         header('Location: /');

@@ -8,7 +8,7 @@ use \PDO;
         private $dbh;
         private $stmt;
 
-        public function __construct($host, $user, $password, $database)
+        public function __construct(string $host, string $user, string $password, string $database)
         {
 
             $options = array(
@@ -21,13 +21,13 @@ use \PDO;
             $this->dbh = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $user, $password, $options);
         }
 
-        public function query($sql)
+        public function query(string $sql) : self
         {
             $this->stmt = $this->dbh->prepare($sql);
             return $this;
         }
 
-        public function bind($param, $value, $type = null)
+        public function bind(string $param, $value, int $type = null)  : self
         {
             if(is_null($type)){
 
@@ -55,24 +55,24 @@ use \PDO;
             return $this;
         }
 
-        public function execute()
+        public function execute() : bool
         {
             return $this->stmt->execute();
         }
 
-       public function getAll()
+       public function getAll() : array
        {
            $this->execute();
            return $this->stmt->fetchAll();
        }
 
-       public function get()
+       public function get() : object
        {
             $this->execute();
             return $this->stmt->fetch();
        }
 
-       public function count()
+       public function count() : int
        {
            return $this->stmt->rowCount();
        }

@@ -5,21 +5,21 @@ namespace App\Models;
 class Tasks extends \App\Model
 {
 
-    public function get(string $order, bool $asc, int $offset, int $limit)
+    public function get(string $order, bool $asc, int $offset, int $limit) : array
     {
         $asc = $asc?'ASC':'DESC';
         return $this->db()->query("SELECT * FROM `tasks` ORDER BY `$order` $asc LIMIT $offset, $limit")
             ->getAll();
     }
 
-    public function getById($id)
+    public function getById($id) : object
     {
         return $this->db()->query('SELECT * FROM `tasks` WHERE `id` = :id')
             ->bind(':id', $id)
             ->get();
     }
 
-    public function add($username, $email, $description, $complited)
+    public function add($username, $email, $description, $complited) : bool
     {
         return $this->db()->query('INSERT INTO `tasks` (`username`, `email`, `description`, `complited`) VALUES (:username, :email, :description, :complited)')
             ->bind(':username', $username)
@@ -29,7 +29,7 @@ class Tasks extends \App\Model
             ->execute();
     }
 
-    public function edit($id, $username, $email, $description, $complited)
+    public function edit($id, $username, $email, $description, $complited) : bool
     {
         return $this->db()->query('UPDATE `tasks` SET `username` = :username, `email` = :email, `description` = :description, `complited` = :complited, `updated` = 1 WHERE `id` = :id')
             ->bind(':id', $id)
@@ -40,7 +40,7 @@ class Tasks extends \App\Model
             ->execute();
     }
 
-    public function complite($id, $complited)
+    public function complite($id, $complited) : bool
     {
         return $this->db()->query('UPDATE `tasks` SET `complited` = :complited, `updated` = 1 WHERE `id` = :id')
             ->bind(':id', $id)
@@ -48,14 +48,14 @@ class Tasks extends \App\Model
             ->execute();
     }
 
-    public function delete($id)
+    public function delete($id) : bool
     {
         return $this->db()->query('DELETE FROM `tasks` where `id` = :id')
             ->bind(':id', $id)
             ->execute();
     }
 
-    public function count()
+    public function count() : int
     {
         return $this->db()->query('SELECT COUNT(*) as count FROM `tasks`')
             ->get()->count;

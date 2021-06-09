@@ -5,7 +5,7 @@ namespace App;
 class View
 {
 
-    public static function render(string $view, array $params = [])
+    public static function render(string $view, array $params = []) : void
     {
         extract($params, EXTR_SKIP);
 

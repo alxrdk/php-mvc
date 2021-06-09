@@ -7,7 +7,7 @@ use \App\Router;
 class Core
 {
 
-    static function run()
+    static function run() : void
     {
 
         $router = new Router();

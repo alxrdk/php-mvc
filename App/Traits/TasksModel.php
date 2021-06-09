@@ -7,7 +7,7 @@ use \App\Models\Tasks;
 trait TasksModel
 {
 
-    protected function tasks()
+    protected function tasks() : \App\Models\Tasks
     {
         return new Tasks();
     }
